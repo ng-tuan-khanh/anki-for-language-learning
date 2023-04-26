@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -38,9 +39,7 @@ fun Card() {
         color = MaterialTheme.colorScheme.secondary,
         tonalElevation = 1.dp,
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
-            .fillMaxSize()
-            .shadow(1.dp)
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
             modifier = Modifier.padding(
@@ -72,11 +71,25 @@ fun Card() {
 @Composable
 fun Screen(title: String) {
     Column() {
-        Text(
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 24.dp),
-            text = title,
-            style = MaterialTheme.typography.displayMedium
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .width(IntrinsicSize.Max)
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 4.dp),
+                text = title,
+                style = MaterialTheme.typography.displaySmall
+            )
+            Divider(
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .padding(start = 24.dp, end = 24.dp)
+            )
+        }
         LazyColumn(
             modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
