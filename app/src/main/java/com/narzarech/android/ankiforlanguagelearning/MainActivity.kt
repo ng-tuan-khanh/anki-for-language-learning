@@ -5,16 +5,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.narzarech.android.ankiforlanguagelearning.ui.theme.AnkiForLanguagelearningTheme
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,79 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Screen("Folders")
+                    FolderScreen()
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun Card() {
-    Surface(
-        color = MaterialTheme.colorScheme.secondary,
-        tonalElevation = 1.dp,
-        shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Column(
-            modifier = Modifier.padding(
-                horizontal = 10.dp,
-                vertical = 16.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                style = MaterialTheme.typography.headlineMedium,
-                text = "Language"
-            )
-            Text(
-                style = MaterialTheme.typography.bodyMedium,
-                text = "Last Reviewed: Never"
-            )
-            Text(
-                style = MaterialTheme.typography.bodyMedium,
-                text = "Number of Decks: 0"
-            )
-            Text(
-                style = MaterialTheme.typography.bodyMedium,
-                text = "Reviewed: 0 / 0"
-            )
-        }
-    }
-}
-
-@Composable
-fun Screen(title: String) {
-    Column() {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .width(IntrinsicSize.Max)
-        ) {
-            Text(
-                modifier = Modifier
-                    .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 4.dp),
-                text = title,
-                style = MaterialTheme.typography.displaySmall
-            )
-            Divider(
-                color = MaterialTheme.colorScheme.outline,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .padding(start = 24.dp, end = 24.dp)
-            )
-        }
-        LazyColumn(
-            modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp, bottom = 24.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            item {
-                Spacer(modifier = Modifier.height(0.dp))
-            }
-            items(6) {
-                Card()
             }
         }
     }
@@ -111,7 +44,7 @@ fun ScreenPreview() {
         Surface(
             color = MaterialTheme.colorScheme.background
         ) {
-            Screen("Folders")
+            FolderScreen()
         }
     }
 }
