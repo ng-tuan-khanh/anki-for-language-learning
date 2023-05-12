@@ -6,13 +6,13 @@ import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +53,12 @@ fun FolderScreen(title: String = "Folders") {
                         .padding(start = 24.dp, end = 24.dp)
                 )
             }
+
+            // TODO: Hard-coded for a list of 6 elements, need to fix later
+            val tmpData = (1..6).map { "Item $it" }
+            val isSelected = remember {
+                mutableStateListOf(*tmpData.map { false }.toTypedArray())
+            }
             LazyColumn(
                 modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -60,8 +66,16 @@ fun FolderScreen(title: String = "Folders") {
                 item {
                     Spacer(modifier = Modifier.height(0.dp))
                 }
-                items(6) {
-                    Item()
+                items(6) {index ->
+                    Item(
+                        isItemSelected = isSelected[index],
+                        onClick = {
+                            for (i in 0..5) {
+                                isSelected[i] = false
+                            }
+                            isSelected[index] = true
+                        }
+                    )
                 }
             }
         }
@@ -69,18 +83,17 @@ fun FolderScreen(title: String = "Folders") {
 }
 
 @Composable
-fun Item() {
-    var isItemExpanded by rememberSaveable { mutableStateOf(false) }
+fun Item(isItemSelected: Boolean, onClick: (Boolean) -> Unit) {
     Surface(
         color = MaterialTheme.colorScheme.secondary,
         tonalElevation = 1.dp,
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier.fillMaxSize().toggleable(
-            value = isItemExpanded,
-            onValueChange = {
-                isItemExpanded = !isItemExpanded
-            }
-        )
+        modifier = Modifier
+            .fillMaxSize()
+            .toggleable(
+                value = isItemSelected,
+                onValueChange = onClick
+            )
     ) {
         Column(
             modifier = Modifier.padding(
@@ -97,7 +110,7 @@ fun Item() {
                 style = MaterialTheme.typography.bodyMedium,
                 text = "Last Reviewed: Never"
             )
-            if (isItemExpanded) {
+            if (isItemSelected) {
                 Text(
                     style = MaterialTheme.typography.bodyMedium,
                     text = "Number of Decks: 0"
