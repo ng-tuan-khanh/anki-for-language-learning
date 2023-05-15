@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,20 +18,39 @@ import androidx.compose.runtime.mutableStateOf
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FolderScreen(title: String = "Folders") {
+    // Store the index of the item currently expanded.
+    // The value of -1 means that there is no item expanded.
+    var indexSelected by remember { mutableStateOf(-1) }
     Scaffold(
         bottomBar = {
-            BottomAppBar(
-                actions = {},
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { /* do something */ },
-                        containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
-                    ) {
-                        Icon(Icons.Filled.Add, "Add new folders")
+            if (indexSelected == -1) {
+                BottomAppBar(
+                    actions = {},
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { /* do something */ },
+                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                        ) {
+                            Icon(Icons.Filled.Add, "Add new folders")
+                        }
                     }
-                }
-            )
+                )
+            } else {
+                // TODO: To test Extended version of the bottom app bar, need to remove later.
+                BottomAppBar(
+                    actions = {},
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            onClick = { /* do something */ },
+                            containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
+                        ) {
+                            Icon(Icons.Filled.Delete, "Add new folders")
+                        }
+                    }
+                )
+            }
         }
     ) { contentPadding ->
         Column(modifier = Modifier.padding(contentPadding)) {
@@ -54,11 +74,6 @@ fun FolderScreen(title: String = "Folders") {
                 )
             }
 
-            // TODO: Hard-coded for a list of 6 elements, need to fix later
-            val tmpData = (1..6).map { "Item $it" }
-            val isSelected = remember {
-                mutableStateListOf(*tmpData.map { false }.toTypedArray())
-            }
             LazyColumn(
                 modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -66,14 +81,11 @@ fun FolderScreen(title: String = "Folders") {
                 item {
                     Spacer(modifier = Modifier.height(0.dp))
                 }
-                items(6) {index ->
+                items(6) { index ->
                     Item(
-                        isItemSelected = isSelected[index],
+                        isItemSelected = (index == indexSelected),
                         onClick = {
-                            for (i in 0..5) {
-                                isSelected[i] = false
-                            }
-                            isSelected[index] = true
+                            indexSelected = if (indexSelected != index) index else -1
                         }
                     )
                 }
