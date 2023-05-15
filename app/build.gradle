@@ -22,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -74,4 +74,7 @@ dependencies {
 
     // Navigation with Compose
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    // Extended icon set
+    implementation "androidx.compose.material:material-icons-extended"
 }

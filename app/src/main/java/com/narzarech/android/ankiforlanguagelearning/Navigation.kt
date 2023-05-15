@@ -14,12 +14,15 @@ fun MyNavHost(
     startDestination: String = "folders"
 ) {
     NavHost(
-        modifier = modifier,
-        navController = navController,
-        startDestination = startDestination
+        modifier = modifier, navController = navController, startDestination = startDestination
     ) {
         composable("folders") {
-            FolderScreen()
+            FolderScreen(onNavigateToDeckScreen = {
+                navController.navigate("decks")
+            })
+        }
+        composable("decks") {
+            DeckScreen()
         }
     }
 }

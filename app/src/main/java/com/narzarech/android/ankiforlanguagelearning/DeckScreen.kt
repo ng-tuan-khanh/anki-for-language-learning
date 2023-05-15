@@ -20,7 +20,7 @@ import com.narzarech.android.ankiforlanguagelearning.ui.theme.AnkiForLanguagelea
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FolderScreen(title: String = "Folders", onNavigateToDeckScreen: () -> Unit) {
+fun DeckScreen(title: String = "Decks") {
     // Store the index of the item currently expanded.
     // The value of -1 means that there is no item expanded.
     var indexSelected by remember { mutableStateOf(-1) }
@@ -38,13 +38,13 @@ fun FolderScreen(title: String = "Folders", onNavigateToDeckScreen: () -> Unit) 
         } else {
             BottomAppBar(actions = {}, floatingActionButton = {
                 ExtendedFloatingActionButton(
-                    onClick = onNavigateToDeckScreen,
+                    onClick = { /* do something */ },
                     containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                     elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                 ) {
-                    Icon(Icons.Filled.ChevronRight, "View Folder FAB")
+                    Icon(Icons.Filled.ChevronRight, "View Deck FAB")
                     Text(
-                        text = "View Folder",
+                        text = "View Deck",
                         color = MaterialTheme.colorScheme.onSecondaryContainer
                     )
                 }
@@ -59,11 +59,11 @@ fun FolderScreen(title: String = "Folders", onNavigateToDeckScreen: () -> Unit) 
             ) {
                 Text(
                     modifier = Modifier.padding(
-                        start = 24.dp,
-                        end = 24.dp,
-                        top = 24.dp,
-                        bottom = 4.dp
-                    ), text = title, style = MaterialTheme.typography.displaySmall
+                            start = 24.dp,
+                            end = 24.dp,
+                            top = 24.dp,
+                            bottom = 4.dp
+                        ), text = title, style = MaterialTheme.typography.displaySmall
                 )
                 Divider(
                     color = MaterialTheme.colorScheme.outline,
@@ -91,3 +91,14 @@ fun FolderScreen(title: String = "Folders", onNavigateToDeckScreen: () -> Unit) 
     }
 }
 
+@Preview
+@Composable
+fun DeckScreenPreview() {
+    AnkiForLanguagelearningTheme {
+        Surface(
+            color = MaterialTheme.colorScheme.background
+        ) {
+            DeckScreen()
+        }
+    }
+}
