@@ -1,12 +1,13 @@
 package com.narzarech.android.ankiforlanguagelearning.database
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-interface RoomDao {
+interface AppDao {
     @Insert
     suspend fun insertFolder(folder: Folder)
 
@@ -18,6 +19,10 @@ interface RoomDao {
 
     @Query("SELECT * FROM folder_table WHERE id = :folderId")
     suspend fun getFolder(folderId: Long): Folder?
+
+    // TODO: Find a way to make this function a coroutine
+    @Query("SELECT * FROM folder_table")
+    fun getAllFolders(): LiveData<List<Folder>>
 
     @Query("DELETE FROM folder_table")
     suspend fun clearFolderDB()
@@ -45,9 +50,6 @@ interface RoomDao {
 
     @Query("DELETE FROM card_table WHERE id = :cardId")
     suspend fun removeCard(cardId: Long)
-
-    @Query("SELECT * FROM card_table WHERE id = :folderId")
-    suspend fun getCard(cardId: Long): Card?
 
     @Query("DELETE FROM card_table")
     suspend fun clearCardDB()

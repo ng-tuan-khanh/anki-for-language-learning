@@ -7,14 +7,16 @@ import androidx.room.PrimaryKey
 data class Folder(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    var deckList : List<Int> = mutableListOf()
+    var name: String,
+    //var deckList : List<Int> = mutableListOf()
 )
 
 @Entity(tableName = "deck_table")
 data class Deck(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    var cardList : List<Int> = mutableListOf()
+    var name: String,
+    //var cardList : List<Int> = mutableListOf()
 )
 
 @Entity(tableName = "card_table")
@@ -23,5 +25,5 @@ data class Card(
     val id: Long = 0L,
     var name: String,
     var meaning: String,
-    var related: List<String> = mutableListOf()
+    //var related: List<String> = mutableListOf()
 )

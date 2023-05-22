@@ -75,12 +75,9 @@ fun DeckScreen(title: String = "Decks") {
             }
 
             LazyColumn(
-                modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 8.dp),
+                modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                item {
-                    Spacer(modifier = Modifier.height(0.dp))
-                }
                 items(6) { index ->
                     Item(isItemSelected = (index == indexSelected), onClick = {
                         indexSelected = if (indexSelected != index) index else -1

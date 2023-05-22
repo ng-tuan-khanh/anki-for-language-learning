@@ -1,5 +1,6 @@
 package com.narzarech.android.ankiforlanguagelearning
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,11 +17,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Item(isItemSelected: Boolean, onClick: (Boolean) -> Unit) {
     Surface(
-        color = MaterialTheme.colorScheme.secondary,
+        color = MaterialTheme.colorScheme.surface,
         tonalElevation = 1.dp,
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
             .fillMaxSize()
+            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, MaterialTheme.shapes.medium)
             .toggleable(
                 value = isItemSelected, onValueChange = onClick
             )
