@@ -1,12 +1,13 @@
 package com.narzarech.android.ankiforlanguagelearning.database
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "folder_table")
 data class Folder(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
+    @ColumnInfo(name = "id") val id: Long = 0L,
     var name: String,
     //var deckList : List<Int> = mutableListOf()
 )

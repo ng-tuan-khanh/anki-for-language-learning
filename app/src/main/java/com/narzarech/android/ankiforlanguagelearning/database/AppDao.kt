@@ -21,7 +21,7 @@ interface AppDao {
     suspend fun getFolder(folderId: Long): Folder?
 
     // TODO: Find a way to make this function a coroutine
-    @Query("SELECT * FROM folder_table")
+    @Query("SELECT * FROM folder_table ORDER BY id DESC")
     fun getAllFolders(): LiveData<List<Folder>>
 
     @Query("DELETE FROM folder_table")

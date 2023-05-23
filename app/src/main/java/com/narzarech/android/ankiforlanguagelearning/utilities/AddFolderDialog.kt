@@ -12,19 +12,22 @@ import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddFolderDialog(onDismiss: () -> Unit, onSubmit: () -> Unit) {
-
-    var folderName by remember { mutableStateOf("") }
-
+fun AddFolderDialog(
+    modifier: Modifier,
+    folderName: String,
+    onValueChange: (String) -> Unit,
+    onDismiss: () -> Unit,
+    onSubmit: () -> Unit
+) {
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
     ) {
         Surface(
+            modifier = modifier,
             color = MaterialTheme.colorScheme.surface,
             tonalElevation = 6.dp,
-            shape = MaterialTheme.shapes.medium,
-            modifier = Modifier.fillMaxSize()
+            shape = MaterialTheme.shapes.medium
         ) {
             Column(
                 modifier = Modifier.padding(
@@ -43,7 +46,7 @@ fun AddFolderDialog(onDismiss: () -> Unit, onSubmit: () -> Unit) {
                 TextField(
                     modifier = Modifier.fillMaxWidth(),
                     value = folderName,
-                    onValueChange = { folderName = it }
+                    onValueChange = { newFolderName -> onValueChange(newFolderName) }
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -68,5 +71,5 @@ fun AddFolderDialog(onDismiss: () -> Unit, onSubmit: () -> Unit) {
 @Preview
 @Composable
 fun AddFolderDialogPreview() {
-    AddFolderDialog(onDismiss = {}, onSubmit = {})
+    AddFolderDialog(Modifier, "", onValueChange = {}, onDismiss = {}, onSubmit = {})
 }

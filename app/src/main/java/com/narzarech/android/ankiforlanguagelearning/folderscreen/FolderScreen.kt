@@ -18,6 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import com.narzarech.android.ankiforlanguagelearning.database.Folder
+import com.narzarech.android.ankiforlanguagelearning.utilities.AddFolderDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -26,16 +27,12 @@ fun FolderScreen(
     folderViewModel: FolderViewModel,
     onNavigateToDeckScreen: () -> Unit
 ) {
-//    var showDialog by remember { mutableStateOf(false) }
-//    if (showDialog) {
-//        CustomDialog(
-//            setShowDialog = {it ->
-//                showDialog = it
-//            },
-//        )
-//    }
-
+    // Data from the database
     val listFolders by folderViewModel.listFolders.observeAsState()
+
+    // UI states of the dialog
+    var showDialog by remember { mutableStateOf(false) }
+    var newFolderName by remember { mutableStateOf("") }
 
     // Store the index of the item currently expanded.
     // The value of -1 means that there is no item expanded.
@@ -44,7 +41,7 @@ fun FolderScreen(
         if (indexSelected == -1) {
             BottomAppBar(actions = {}, floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { /*showDialog = true*/ },
+                    onClick = { showDialog = true },
                     containerColor = BottomAppBarDefaults.bottomAppBarFabColor,
                     elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation()
                 ) {
@@ -104,19 +101,21 @@ fun FolderScreen(
                     )
                 }
             }
+
+            if (showDialog) {
+                AddFolderDialog(
+                    modifier = Modifier.padding(horizontal = 24.dp),
+                    folderName = newFolderName,
+                    onValueChange = { newFolderName = it },
+                    onDismiss = { showDialog = !showDialog },
+                    onSubmit = {
+                        folderViewModel.insertFolder(Folder(name = newFolderName))
+                        newFolderName = ""
+                        showDialog = !showDialog
+                    }
+                )
+            }
         }
     }
 }
-
-
-
-//@Composable
-//fun CustomDialog(setShowDialog: (Boolean) -> Unit,) {
-//    Dialog(
-//        onDismissRequest = { setShowDialog(false) }
-//    ) {
-//        Column {
-//        }
-//    }
-//}
 
