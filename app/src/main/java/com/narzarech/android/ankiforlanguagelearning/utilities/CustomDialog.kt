@@ -12,10 +12,12 @@ import androidx.compose.ui.window.DialogProperties
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddFolderDialog(
+fun CustomDialog(
     modifier: Modifier,
-    folderName: String,
-    onValueChange: (String) -> Unit,
+    dialogName: String,
+    showInput: Boolean = true,
+    folderName: String = "",
+    onValueChange: (String) -> Unit = {},
     onDismiss: () -> Unit,
     onSubmit: () -> Unit
 ) {
@@ -40,14 +42,16 @@ fun AddFolderDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
-                    text = "Folder",
-                    style = MaterialTheme.typography.headlineMedium
+                    text = dialogName,
+                    style = MaterialTheme.typography.titleLarge
                 )
-                TextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = folderName,
-                    onValueChange = { newFolderName -> onValueChange(newFolderName) }
-                )
+                if (showInput) {
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = folderName,
+                        onValueChange = { newFolderName -> onValueChange(newFolderName) }
+                    )
+                }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
@@ -70,6 +74,6 @@ fun AddFolderDialog(
 
 @Preview
 @Composable
-fun AddFolderDialogPreview() {
-    AddFolderDialog(Modifier, "", onValueChange = {}, onDismiss = {}, onSubmit = {})
+fun CustomDialogPreview() {
+    CustomDialog(Modifier, dialogName = "Folder", onDismiss = {}, onSubmit = {})
 }

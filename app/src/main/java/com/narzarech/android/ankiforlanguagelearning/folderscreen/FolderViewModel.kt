@@ -5,12 +5,26 @@ import com.narzarech.android.ankiforlanguagelearning.database.AppDao
 import com.narzarech.android.ankiforlanguagelearning.database.Folder
 import kotlinx.coroutines.launch
 
-class FolderViewModel(val database: AppDao): ViewModel() {
-    var listFolders: LiveData<List<Folder>> = database.getAllFolders()
 
+class FolderViewModel(val database: AppDao): ViewModel() {
+    val listFolders: LiveData<List<Folder>> = database.getAllFolders()
     fun insertFolder(folder: Folder) {
         viewModelScope.launch {
             database.insertFolder(folder)
+        }
+    }
+    fun removeFolder(folder: Folder?) {
+        folder?.let {
+            viewModelScope.launch {
+                database.removeFolder(folder.id)
+            }
+        }
+    }
+
+    fun updateFolder(folder: Folder?, name: String) {
+        folder?.let {
+            removeFolder(folder)
+            insertFolder(Folder(name = name))
         }
     }
 
