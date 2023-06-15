@@ -8,23 +8,23 @@ import androidx.room.PrimaryKey
 data class Folder(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") val id: Long = 0L,
-    var name: String = "",
-    //var deckList : List<Int> = mutableListOf()
+    @ColumnInfo(name = "name") var name: String = "",
+    @ColumnInfo(name = "deck_list") var deckList: List<Int> = mutableListOf()
 )
 
 @Entity(tableName = "deck_table")
 data class Deck(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
-    var name: String,
-    //var cardList : List<Int> = mutableListOf()
+    @ColumnInfo(name = "id") val id: Long = 0L,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "card_list") var cardList: List<Int> = mutableListOf()
 )
 
 @Entity(tableName = "card_table")
 data class Card(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0L,
-    var name: String,
-    var meaning: String,
-    //var related: List<String> = mutableListOf()
+    @ColumnInfo(name = "id") val id: Long = 0L,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "meaning") var meaning: String,
+    @ColumnInfo(name = "related_word_list") var relatedWordList: List<String> = mutableListOf()
 )
