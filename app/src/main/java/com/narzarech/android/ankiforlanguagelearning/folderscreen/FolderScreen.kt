@@ -38,7 +38,7 @@ fun FolderScreen(
 
     // UI states of the dialog
     var showDialog by remember { mutableStateOf(ShowDialog.NONE) }
-    var newFolderName by remember { mutableStateOf("") }
+    var inputFolderName by remember { mutableStateOf("") }
 
     // Store the index of the item currently expanded.
     // The value of -1 means that there is no item expanded.
@@ -128,12 +128,12 @@ fun FolderScreen(
                 CustomDialog(
                     modifier = Modifier.padding(horizontal = 24.dp),
                     dialogName = "Add",
-                    folderName = newFolderName,
-                    onValueChange = { newFolderName = it },
+                    folderName = inputFolderName,
+                    onValueChange = { inputFolderName = it },
                     onDismiss = { showDialog = ShowDialog.NONE },
                     onSubmit = {
-                        folderViewModel.insertFolder(Folder(name = newFolderName))
-                        newFolderName = ""
+                        folderViewModel.insertFolder(Folder(name = inputFolderName))
+                        inputFolderName = ""
                         showDialog = ShowDialog.NONE
                     }
                 )
@@ -141,15 +141,15 @@ fun FolderScreen(
                 CustomDialog(
                     modifier = Modifier.padding(horizontal = 24.dp),
                     dialogName = "Rename",
-                    folderName = newFolderName,
-                    onValueChange = { newFolderName = it },
+                    folderName = inputFolderName,
+                    onValueChange = { inputFolderName = it },
                     onDismiss = { showDialog = ShowDialog.NONE },
                     onSubmit = {
                         folderViewModel.updateFolder(
                             folder = listFolders?.get(indexSelected),
-                            name = newFolderName
+                            name = inputFolderName
                         )
-                        newFolderName = ""
+                        inputFolderName = ""
                         showDialog = ShowDialog.NONE
                     }
                 )
